@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
      password:{
         type:String,
         required:true, 
+     },
+     avatar:{
+      type:String,
+      default: "https://www.bing.com/images/search?q=Profile+Photo+Icon.png&form=IRTRRL&first=1"
      }
 },
 {timestamps: true}
