@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice'; // Adjust path if needed
 
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -16,8 +18,8 @@ export default function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(signInStart());
     try {
-      setLoading(true);
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
@@ -25,23 +27,18 @@ export default function SignIn() {
         },
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
-      console.log(data);
-      if (data.success === false) {
-        setError(data.message);
-        setLoading(false);
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        dispatch(signInFailure(errorData.message || 'Failed to sign in'));
         return;
       }
-      setLoading(false);
-      setError(null);
+
+      const data = await res.json();
+      dispatch(signInSuccess(data));
       navigate('/');
     } catch (error) {
-      setLoading(false);
-      if (error.code === 'ECONNRESET') {
-        setError('Connection was reset. Please try again later.');
-      } else {
-        setError(error.message);
-      }
+      dispatch(signInFailure(error.message || 'Network error'));
     }
   };
 
@@ -56,6 +53,7 @@ export default function SignIn() {
           id='email'
           value={formData.email}
           onChange={handleChange}
+          required
         />
         <input
           type='password'
@@ -64,6 +62,7 @@ export default function SignIn() {
           id='password'
           value={formData.password}
           onChange={handleChange}
+          required
         />
         <button
           disabled={loading}
