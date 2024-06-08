@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
      },
      avatar:{
       type:String,
-      default: "https://www.bing.com/images/search?q=Profile+Photo+Icon.png&form=IRTRRL&first=1"
+      default: "https://th.bing.com/th/id/OIP.lcdOc6CAIpbvYx3XHfoJ0gAAAA?rs=1&pid=ImgDetMain"
      }
 },
 {timestamps: true}
