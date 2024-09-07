@@ -16,10 +16,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    avatar: {
-        type: String,
-        default: 'https://example.com/default-avatar.png',
-    },
+   // avatar: {
+     //   type: String,
+       // default: 'https://example.com/default-avatar.png',
+    //},
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
