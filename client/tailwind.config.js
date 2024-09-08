@@ -1,11 +1,11 @@
-module.exports = {
-  content: [
-    "./src/**/*.{html,js,jsx,ts,tsx}", // Include all relevant file types
-    "./components/**/*.{html,js,jsx,ts,tsx}", // If you have a components directory
-    "./pages/**/*.{html,js,jsx,ts,tsx}", // If you have a pages directory
-  ],
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {},
   },
-  plugins: [],
-}
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    // ...
+  ],
+};

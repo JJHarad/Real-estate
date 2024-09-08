@@ -9,11 +9,14 @@ import {
   FaBath,
   FaBed,
   FaChair,
+  FaMapMarkedAlt,
   FaMapMarkerAlt,
   FaParking,
   FaShare,
 } from 'react-icons/fa';
 import Contact from '../components/Contact';
+
+// https://sabe.io/blog/javascript-format-numbers-commas#:~:text=The%20best%20way%20to%20format,format%20the%20number%20with%20commas.
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -21,9 +24,9 @@ export default function Listing() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [contact, setContact] = useState(false); 
+  const [contact, setContact] = useState(false);
   const params = useParams();
-  const {currentUser} = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -48,7 +51,7 @@ export default function Listing() {
   }, [params.listingId]);
 
   return (
-    <main className="overflow-y-auto max-h-screen h-screen"> {/* Set full-screen height and scroll */}
+    <main>
       {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
       {error && (
         <p className='text-center my-7 text-2xl'>Something went wrong!</p>
@@ -59,7 +62,7 @@ export default function Listing() {
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
                 <div
-                  className='h-[40vh]' // Reduced the height of the slider to 40% of viewport
+                  className='h-[550px]'
                   style={{
                     background: `url(${url}) center no-repeat`,
                     backgroundSize: 'cover',
@@ -93,7 +96,7 @@ export default function Listing() {
                 : listing.regularPrice.toLocaleString('en-US')}
               {listing.type === 'rent' && ' / month'}
             </p>
-            <p className='flex items-center mt-6 gap-2 text-slate-600 text-sm'>
+            <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
               <FaMapMarkerAlt className='text-green-700' />
               {listing.address}
             </p>
@@ -103,7 +106,7 @@ export default function Listing() {
               </p>
               {listing.offer && (
                 <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                  ${+listing.regularPrice - +listing.discountPrice}
+                  ${+listing.regularPrice - +listing.discountPrice} OFF
                 </p>
               )}
             </div>
@@ -136,7 +139,7 @@ export default function Listing() {
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
-                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3 mt-4'
+                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
               >
                 Contact landlord
               </button>
