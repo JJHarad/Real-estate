@@ -135,7 +135,6 @@ export default function Listing() {
                 <FaChair className='text-lg' />
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
-            </ul>
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
@@ -145,6 +144,7 @@ export default function Listing() {
               </button>
             )}
             {contact && <Contact listing={listing} />}
+            </ul>
           </div>
         </div>
       )}
